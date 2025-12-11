@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .materi-container {
+            max-width: 900px;
+            margin: 120px auto;
+            padding: 20px;
+        }
+
+        .flipbook-wrapper {
+            width: 550px;
+            height: 860px;
+            margin: 40px auto;
+            cursor: grab;
+            user-select: none;
+        }
+
+        .flipbook-wrapper:active {
+            cursor: grabbing;
+        }
+
+        .flipbook {
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            border: 3px solid #333;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            position: relative;
+        }
+
+        .flipbook img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .flipbook img.active {
+            display: block;
+            animation: flipIn 0.5s ease-in-out;
+        }
+
+        @keyframes flipIn {
+            from {
+                opacity: 0;
+                transform: rotateY(90deg);
+            }
+            to {
+                opacity: 1;
+                transform: rotateY(0deg);
+            }
+        }
+
+        .flipbook-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        #pageCounter {
+            font-weight: bold;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .back-button {
+            margin: 20px;
+            text-align: center;
+        }
+
+        .back-button a {
+            padding: 10px 20px;
+            background-color: #6c757d;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .back-button a:hover {
+            background-color: #5a6268;
+        }
+
+        .hint-text {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Flipbook -->
+<div class="materi-container">
+    <div class="flipbook-wrapper" id="flipbookWrapper">
+        <div class="flipbook">
+            <img src="gambar/materi 1.jpg" alt="Halaman 1">
+            <img src="gambar/materi 2.jpg" alt="Halaman 2">
+            <img src="gambar/materi 3.jpg" alt="Halaman 3">
+            <img src="gambar/materi 4.jpg" alt="Halaman 4">
+            <img src="gambar/materi 5.jpg" alt="Halaman 5">
+            <img src="gambar/materi 6.jpg" alt="Halaman 6">
+            <img src="gambar/materi 7.jpg" alt="Halaman 7">
+        </div>
+    </div>
+    
+    <div class="hint-text">👆 Klik kiri untuk halaman sebelumnya | Klik kanan untuk halaman berikutnya</div>
+
+    <div class="flipbook-controls">
+        <span id="pageCounter">Halaman 1 dari 7</span>
+    </div>
+
+    <div class="back-button">
+        <a href="index.html">← Kembali ke Beranda</a>
+    </div>
+</div>
+
+<script>
+    let currentPage = 0;
+    const pages = document.querySelectorAll('.flipbook img');
+    const totalPages = pages.length;
+    let isDragging = false;
+    let startX = 0;
+
+    pages[currentPage].classList.add('active');
+    updateControls();
+
+    // Klik di area flipbook
+    document.getElementById('flipbookWrapper').addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const clickX = e.clientX - rect.left;
+        const threshold = rect.width / 2;
+
+        if (clickX < threshold) {
+            prevPage();
+        } else {
+            nextPage();
+        }
+    });
+
+    // Drag/swipe di area flipbook
+    document.getElementById('flipbookWrapper').addEventListener('mousedown', function(e) {
+        isDragging = true;
+        startX = e.clientX;
+    });
+
+    document.addEventListener('mousemove', function(e) {
+        if (!isDragging) return;
+    });
+
+    document.addEventListener('mouseup', function(e) {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const endX = e.clientX;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextPage();
+            } else {
+                prevPage();
+            }
+        }
+    });
+
+    // Touch support untuk mobile
+    document.getElementById('flipbookWrapper').addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+    });
+
+    document.addEventListener('touchend', function(e) {
+        const endX = e.changedTouches[0].clientX;
+        const diff = startX - endX;
+
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                nextPage();
+            } else {
+                prevPage();
+            }
+        }
+    });
+
+    function nextPage() {
+        if (currentPage < totalPages - 1) {
+            pages[currentPage].classList.remove('active');
+            currentPage++;
+            pages[currentPage].classList.add('active');
+            updateControls();
+        }
+    }
+
+    function prevPage() {
+        if (currentPage > 0) {
+            pages[currentPage].classList.remove('active');
+            currentPage--;
+            pages[currentPage].classList.add('active');
+            updateControls();
+        }
+    }
+
+    function updateControls() {
+        document.getElementById('pageCounter').textContent = 
+            `Halaman ${currentPage + 1} dari ${totalPages}`;
+    }
+</script>
+
+</body>
+</html>

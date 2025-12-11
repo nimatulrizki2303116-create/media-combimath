@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .navigasi {
+            padding: 8px 20px;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .navigasi .logo h2 {
+            color: white;
+            font-size: 25px;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .video-section {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-section h2 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .video-player {
+            width: 100%;
+            height: 400px;
+            background-color: #000;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+
+        .video-player video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .question-section {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .question-section h3 {
+            color: #667eea;
+            margin-top: 0;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .question-item {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .question-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .question-text {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 16px;
+            resize: vertical;
+            min-height: 80px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .answer-input:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 8px rgba(102, 126, 234, 0.4);
+        }
+
+        .answer-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .btn-submit {
+            padding: 10px 25px;
+            background-color: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-submit:hover {
+            background-color: #764ba2;
+        }
+
+        .btn-reset {
+            padding: 10px 25px;
+            background-color: #ccc;
+            color: #333;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        .btn-reset:hover {
+            background-color: #aaa;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            display: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .feedback.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .feedback.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .feedback.warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            display: block;
+        }
+
+        .info-section {
+            background-color: #e7f3ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 15px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .info-section strong {
+            color: #667eea;
+        }
+
+        .back-button {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .back-button a {
+            padding: 12px 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .back-button a:hover {
+            background-color: white;
+        }
+
+        .section-title {
+            color: white;
+            font-size: 22px;
+            margin: 40px 0 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigasi -->
+<div class="navigasi">
+    <div class="logo">
+        <h2>Combination Mathematics - ilustrasi</h2>
+    </div>
+</div>
+
+<!-- Konten Utama -->
+<div class="container">
+    
+    <!-- BAGIAN VIDEO KOMBINASI -->
+    <h2 class="section-title">🎨 VIDEO 1: KOMBINASI</h2>
+
+    <div class="video-section">
+        <h2>📹 Eksperimen Kombinasi</h2>
+        <div class="video-player">
+            <video controls>
+                <source src="gambar/video 1.mp4" type="video/mp4">
+                Browser Anda tidak mendukung video HTML5.
+            </video>
+        </div>
+        <p>Silakan tonton video eksperimen kombinasi di atas.</p>
+    </div>
+
+    <div class="question-section">
+        <h3>❓ Pertanyaan Video Kombinasi</h3>
+        
+        <div class="question-item">
+            <div class="question-text">
+                1. Dari ketiga eksperimen tersebut, apakah warna yang dihasilkan sama?
+            </div>
+            <textarea class="answer-input" id="answer1" placeholder="Tulis jawaban Anda..."></textarea>
+            <div class="answer-buttons">
+                <button class="btn-submit" onclick="submitAnswer(1, 'sama')">Kirim Jawaban</button>
+                <button class="btn-reset" onclick="resetAnswer(1)">Hapus</button>
+            </div>
+            <div class="feedback" id="feedback1"></div>
+        </div>
+
+        <div class="question-item">
+            <div class="question-text">
+                2. Apakah urutan penuangan warna mempengaruhi hasil warna akhirnya?
+            </div>
+            <textarea class="answer-input" id="answer2" placeholder="Tulis jawaban Anda..."></textarea>
+            <div class="answer-buttons">
+                <button class="btn-submit" onclick="submitAnswer(2, 'tidak berpengaruh')">Kirim Jawaban</button>
+                <button class="btn-reset" onclick="resetAnswer(2)">Hapus</button>
+            </div>
+            <div class="feedback" id="feedback2"></div>
+        </div>
+    </div>
+
+    <!-- BAGIAN VIDEO PERMUTASI -->
+    <h2 class="section-title">🚩 VIDEO 2: PERMUTASI</h2>
+
+    <div class="video-section">
+        <h2>📹 Eksperimen Permutasi</h2>
+        <div class="video-player">
+            <video controls>
+                <source src="gambar/video 2.mp4" type="video/mp4">
+                Browser Anda tidak mendukung video HTML5.
+            </video>
+        </div>
+        <p>Silakan tonton video eksperimen permutasi di atas.</p>
+    </div>
+
+    <div class="question-section">
+        <h3>❓ Pertanyaan Video Permutasi</h3>
+        
+        <div class="question-item">
+            <div class="question-text">
+                1. Apakah urutan pewarnaan bendera mempengaruhi hasil bendera?
+            </div>
+            <textarea class="answer-input" id="answer3" placeholder="Tulis jawaban Anda..."></textarea>
+            <div class="answer-buttons">
+                <button class="btn-submit" onclick="submitAnswer(3, 'mempengaruhi')">Kirim Jawaban</button>
+                <button class="btn-reset" onclick="resetAnswer(3)">Hapus</button>
+            </div>
+            <div class="feedback" id="feedback3"></div>
+        </div>
+    </div>
+
+    <!-- BAGIAN KESIMPULAN DAN PERTANYAAN AKHIR -->
+    <div class="info-section">
+        <strong>📌 Kesimpulan Eksperimen:</strong><br>
+        • <strong>Eksperimen pada Video 1 merupakan contoh permasalahan KOMBINASI</strong><br>
+        • <strong>Eksperimen pada Video 2 merupakan contoh permasalahan PERMUTASI</strong>
+    </div>
+
+    <div class="question-section">
+        <h3>❓ Pertanyaan Akhir</h3>
+        
+        <div class="question-item">
+            <div class="question-text">
+                Berdasarkan eksperimen pada kedua video tersebut, apakah terdapat perbedaan terkait aturan kombinasi dan permutasi? Sebutkan letak perbedaannya!
+            </div>
+            <textarea class="answer-input" id="answer4" placeholder="Tulis jawaban Anda..."></textarea>
+            <div class="answer-buttons">
+                <button class="btn-submit" onclick="submitAnswer(4, 'ada, pada urutan')">Kirim Jawaban</button>
+                <button class="btn-reset" onclick="resetAnswer(4)">Hapus</button>
+            </div>
+            <div class="feedback" id="feedback4"></div>
+        </div>
+    </div>
+
+    <!-- Tombol Kembali -->
+    <div class="back-button">
+        <a href="index.html">← Kembali ke Beranda</a>
+    </div>
+</div>
+
+<script>
+    function submitAnswer(questionNum, correctAnswer) {
+        const answerText = document.getElementById(`answer${questionNum}`).value.trim().toLowerCase();
+        const feedbackDiv = document.getElementById(`feedback${questionNum}`);
+
+        if (answerText === '') {
+            feedbackDiv.textContent = '⚠️ Silakan isi jawaban terlebih dahulu!';
+            feedbackDiv.className = 'feedback warning';
+        } else if (answerText === correctAnswer.toLowerCase()) {
+            feedbackDiv.textContent = '✅ Jawaban Anda BENAR! Selamat!';
+            feedbackDiv.className = 'feedback success';
+            localStorage.setItem(`answer${questionNum}`, answerText);
+        } else {
+            feedbackDiv.textContent = `❌ Jawaban Anda SALAH. Jawaban yang benar adalah: "${correctAnswer}"`;
+            feedbackDiv.className = 'feedback error';
+            localStorage.setItem(`answer${questionNum}`, answerText);
+        }
+    }
+
+    function resetAnswer(questionNum) {
+        document.getElementById(`answer${questionNum}`).value = '';
+        const feedbackDiv = document.getElementById(`feedback${questionNum}`);
+        feedbackDiv.className = 'feedback';
+        feedbackDiv.textContent = '';
+        localStorage.removeItem(`answer${questionNum}`);
+    }
+
+    // Load jawaban yang disimpan saat halaman dibuka
+    window.addEventListener('load', function() {
+        for (let i = 1; i <= 4; i++) {
+            const savedAnswer = localStorage.getItem(`answer${i}`);
+            if (savedAnswer) {
+                document.getElementById(`answer${i}`).value = savedAnswer;
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
